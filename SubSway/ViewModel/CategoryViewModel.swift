@@ -13,10 +13,10 @@ class CategoryViewModel: ObservableObject {
 	
 	@Published var categories = [
 		Category(categoryName: "Fournisseur d'énergie", categoryImageName: "Fournisseur d'énergie", subcriptions: []),
-		Category(categoryName: "Fournisseur internet", categoryImageName: "Fournisseur internet", subcriptions: []),
-		Category(categoryName: "Streamig vidéo", categoryImageName: "Streamig vidéo", subcriptions: []),
-		Category(categoryName: "Streamig musical", categoryImageName: "Streamig musical", subcriptions: []),
-		Category(categoryName: "Téléphonie mobile", categoryImageName: "Téléphonie mobile", subcriptions: []),
+		Category(categoryName: "Fournisseur internet", categoryImageName: "Fournisseur Internet", subcriptions: []),
+		Category(categoryName: "Streamig vidéo", categoryImageName: "Streaming vidéo", subcriptions: []),
+		Category(categoryName: "Streamig musical", categoryImageName: "Streaming Musical", subcriptions: []),
+		Category(categoryName: "Téléphonie mobile", categoryImageName: "Téléphonie Mobile", subcriptions: []),
 		Category(categoryName: "Chaine TV", categoryImageName: "Chaine TV", subcriptions: []),
 		Category(categoryName: "Assurance", categoryImageName: "Assurance", subcriptions: []),
 		Category(categoryName: "Sport", categoryImageName: "Sport", subcriptions: [])
