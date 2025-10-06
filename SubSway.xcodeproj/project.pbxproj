@@ -12,6 +12,19 @@
 		BE405DE62BB4915F00C3539A /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE405DE52BB4915F00C3539A /* Item.swift */; };
 		BE405DE82BB4916100C3539A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE405DE72BB4916100C3539A /* Assets.xcassets */; };
 		BE405DEB2BB4916100C3539A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE405DEA2BB4916100C3539A /* Preview Assets.xcassets */; };
+		BE405DF52BB4919F00C3539A /* Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE405DF42BB4919F00C3539A /* Subscription.swift */; };
+		BE405DF72BB491AF00C3539A /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE405DF62BB491AE00C3539A /* Category.swift */; };
+		BE405DF92BB49A1F00C3539A /* SubscriptionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE405DF82BB49A1F00C3539A /* SubscriptionViewModel.swift */; };
+		BE405DFC2BB4A12200C3539A /* SubscriptionValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE405DFB2BB4A12200C3539A /* SubscriptionValidator.swift */; };
+		BE5FFF1D2BC40B400051CA29 /* SubscriptionDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE5FFF1C2BC40B400051CA29 /* SubscriptionDetailsView.swift */; };
+		BE5FFF1F2BC40D2F0051CA29 /* MySubscriptionInformationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE5FFF1E2BC40D2F0051CA29 /* MySubscriptionInformationsView.swift */; };
+		BE5FFF212BC41FB30051CA29 /* MySubscriptionsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE5FFF202BC41FB30051CA29 /* MySubscriptionsListView.swift */; };
+		BE6110DA2BBD657900478557 /* SubscriptionDetailsFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6110D92BBD657900478557 /* SubscriptionDetailsFormView.swift */; };
+		BE733B282C0A42F500013AB2 /* SubscriptionContainer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BE733B262C0A42F500013AB2 /* SubscriptionContainer.xcdatamodeld */; };
+		BE7F25B22BB578B400C297FD /* CategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7F25B12BB578B400C297FD /* CategoryViewModel.swift */; };
+		BE7F25B42BB89E9F00C297FD /* CategoriesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7F25B32BB89E9F00C297FD /* CategoriesListView.swift */; };
+		BE7F25B62BB8A24100C297FD /* CreateNewSubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7F25B52BB8A24100C297FD /* CreateNewSubscriptionView.swift */; };
+		BEE570762BC53F4100A4E554 /* SubscriptionsDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE570752BC53F4100A4E554 /* SubscriptionsDashboardView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +34,19 @@
 		BE405DE52BB4915F00C3539A /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		BE405DE72BB4916100C3539A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BE405DEA2BB4916100C3539A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		BE405DF42BB4919F00C3539A /* Subscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subscription.swift; sourceTree = "<group>"; };
+		BE405DF62BB491AE00C3539A /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		BE405DF82BB49A1F00C3539A /* SubscriptionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionViewModel.swift; sourceTree = "<group>"; };
+		BE405DFB2BB4A12200C3539A /* SubscriptionValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionValidator.swift; sourceTree = "<group>"; };
+		BE5FFF1C2BC40B400051CA29 /* SubscriptionDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionDetailsView.swift; sourceTree = "<group>"; };
+		BE5FFF1E2BC40D2F0051CA29 /* MySubscriptionInformationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySubscriptionInformationsView.swift; sourceTree = "<group>"; };
+		BE5FFF202BC41FB30051CA29 /* MySubscriptionsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySubscriptionsListView.swift; sourceTree = "<group>"; };
+		BE6110D92BBD657900478557 /* SubscriptionDetailsFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionDetailsFormView.swift; sourceTree = "<group>"; };
+		BE733B272C0A42F500013AB2 /* SubscriptionContainer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SubscriptionContainer.xcdatamodel; sourceTree = "<group>"; };
+		BE7F25B12BB578B400C297FD /* CategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewModel.swift; sourceTree = "<group>"; };
+		BE7F25B32BB89E9F00C297FD /* CategoriesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesListView.swift; sourceTree = "<group>"; };
+		BE7F25B52BB8A24100C297FD /* CreateNewSubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewSubscriptionView.swift; sourceTree = "<group>"; };
+		BEE570752BC53F4100A4E554 /* SubscriptionsDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionsDashboardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,8 +79,10 @@
 		BE405DE02BB4915F00C3539A /* SubSway */ = {
 			isa = PBXGroup;
 			children = (
+				BE405DF32BB4918500C3539A /* ViewModel */,
+				BE405DF22BB4917D00C3539A /* Model */,
+				BE405DF12BB4917100C3539A /* View */,
 				BE405DE12BB4915F00C3539A /* SubSwayApp.swift */,
-				BE405DE32BB4915F00C3539A /* ContentView.swift */,
 				BE405DE52BB4915F00C3539A /* Item.swift */,
 				BE405DE72BB4916100C3539A /* Assets.xcassets */,
 				BE405DE92BB4916100C3539A /* Preview Content */,
@@ -68,6 +96,49 @@
 				BE405DEA2BB4916100C3539A /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		BE405DF12BB4917100C3539A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				BE405DE32BB4915F00C3539A /* ContentView.swift */,
+				BE7F25B52BB8A24100C297FD /* CreateNewSubscriptionView.swift */,
+				BE7F25B32BB89E9F00C297FD /* CategoriesListView.swift */,
+				BE5FFF1C2BC40B400051CA29 /* SubscriptionDetailsView.swift */,
+				BE6110D92BBD657900478557 /* SubscriptionDetailsFormView.swift */,
+				BE5FFF202BC41FB30051CA29 /* MySubscriptionsListView.swift */,
+				BE5FFF1E2BC40D2F0051CA29 /* MySubscriptionInformationsView.swift */,
+				BEE570752BC53F4100A4E554 /* SubscriptionsDashboardView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		BE405DF22BB4917D00C3539A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				BE405DF42BB4919F00C3539A /* Subscription.swift */,
+				BE405DF62BB491AE00C3539A /* Category.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		BE405DF32BB4918500C3539A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				BE405DFA2BB4A0FD00C3539A /* Validator */,
+				BE405DF82BB49A1F00C3539A /* SubscriptionViewModel.swift */,
+				BE7F25B12BB578B400C297FD /* CategoryViewModel.swift */,
+				BE733B262C0A42F500013AB2 /* SubscriptionContainer.xcdatamodeld */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		BE405DFA2BB4A0FD00C3539A /* Validator */ = {
+			isa = PBXGroup;
+			children = (
+				BE405DFB2BB4A12200C3539A /* SubscriptionValidator.swift */,
+			);
+			path = Validator;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -140,9 +211,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE6110DA2BBD657900478557 /* SubscriptionDetailsFormView.swift in Sources */,
 				BE405DE42BB4915F00C3539A /* ContentView.swift in Sources */,
+				BE5FFF1D2BC40B400051CA29 /* SubscriptionDetailsView.swift in Sources */,
+				BE405DF72BB491AF00C3539A /* Category.swift in Sources */,
+				BE405DFC2BB4A12200C3539A /* SubscriptionValidator.swift in Sources */,
 				BE405DE62BB4915F00C3539A /* Item.swift in Sources */,
+				BE7F25B22BB578B400C297FD /* CategoryViewModel.swift in Sources */,
+				BE7F25B42BB89E9F00C297FD /* CategoriesListView.swift in Sources */,
+				BE7F25B62BB8A24100C297FD /* CreateNewSubscriptionView.swift in Sources */,
+				BE405DF92BB49A1F00C3539A /* SubscriptionViewModel.swift in Sources */,
+				BE733B282C0A42F500013AB2 /* SubscriptionContainer.xcdatamodeld in Sources */,
+				BE405DF52BB4919F00C3539A /* Subscription.swift in Sources */,
 				BE405DE22BB4915F00C3539A /* SubSwayApp.swift in Sources */,
+				BE5FFF1F2BC40D2F0051CA29 /* MySubscriptionInformationsView.swift in Sources */,
+				BE5FFF212BC41FB30051CA29 /* MySubscriptionsListView.swift in Sources */,
+				BEE570762BC53F4100A4E554 /* SubscriptionsDashboardView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -279,11 +363,12 @@
 				DEVELOPMENT_TEAM = JW5QDUDC7K;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -291,9 +376,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = sliceofdigital.SubSway;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -308,11 +396,12 @@
 				DEVELOPMENT_TEAM = JW5QDUDC7K;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -320,9 +409,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = sliceofdigital.SubSway;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -348,6 +440,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		BE733B262C0A42F500013AB2 /* SubscriptionContainer.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				BE733B272C0A42F500013AB2 /* SubscriptionContainer.xcdatamodel */,
+			);
+			currentVersion = BE733B272C0A42F500013AB2 /* SubscriptionContainer.xcdatamodel */;
+			path = SubscriptionContainer.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = BE405DD62BB4915F00C3539A /* Project object */;
 }
