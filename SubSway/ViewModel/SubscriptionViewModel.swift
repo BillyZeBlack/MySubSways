@@ -10,7 +10,7 @@ import SwiftUI
 import CoreData
 
 class SubscriptionViewModel: ObservableObject {
-	//private var categoryVM: CategoryViewModel
+	private var categoryVM: CategoryViewModel
 	
 	@Published var mySubscriptionsList : [Subscription] = []
 	@Published var subscriptionsList: [Subscription] = []
@@ -21,7 +21,7 @@ class SubscriptionViewModel: ObservableObject {
 	var floatValuePrice : Float = 0
 	
 	init(categoryVM: CategoryViewModel) {
-//		self.categoryVM = categoryVM
+		self.categoryVM = categoryVM
 //		populateSubscriptionList()
 		
 		if !mySubscriptionsList.isEmpty {
@@ -484,7 +484,7 @@ class SubscriptionViewModel: ObservableObject {
 				subscriptionIsCommited: subscriptionIsCommited,
 				subscriptionIsTrialPeriod: subscriptionIsTrialPeriod,
 				subscriptionTrialPeriod: subscriptionTrialPeriodDuration,
-				subscriptionCategoryName: cat,
+                subscriptionCategoryName: cat.categoryName,
 				subscriptionInformation: subscriptionInformation,
 				subscriptionSelectionPayementFrequency: selectionPaymentFrequency,
 				subscriptionObject: nil
@@ -525,7 +525,7 @@ class SubscriptionViewModel: ObservableObject {
 			subscription.isSubscriptionCommitted = subscriptionIsCommited
 			subscription.isSubscriptionTrialPeriod = subscriptionIsTrialPeriod
 			subscription.subscriptionTrialPeriodDuration = Int(subscriptionTrialPeriod) ?? 0
-			subscription.categoryName = subscriptionCategoryName.categoryName.isEmpty ? categoryVM.categories[0] : subscriptionCategoryName
+			subscription.categoryName = subscriptionCategoryName
 			subscription.subscriptionInformations = subscriptionInformation
 			subscription.selectionPaymentFrequency = subscriptionSelectionPayementFrequency
 			

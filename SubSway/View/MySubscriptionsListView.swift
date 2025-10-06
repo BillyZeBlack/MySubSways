@@ -14,7 +14,10 @@ struct MySubscriptionsListView: View {
 	var body: some View {
 		List {
 			ForEach(categoryVM.categories, id: \.id) { cat in
-				let matchingSubscriptions = subscriptionVM.mySubscriptionsList.filter { $0.categoryName!.categoryName == cat.categoryName }
+				let matchingSubscriptions = subscriptionVM.mySubscriptionsList.filter { 
+					guard let subCategoryName = $0.categoryName else { return false }
+					return subCategoryName == cat.categoryName 
+				}
 				if !matchingSubscriptions.isEmpty {
 					Section(header: Text(cat.categoryName)) {
 						ForEach(matchingSubscriptions, id: \.id) { sub in

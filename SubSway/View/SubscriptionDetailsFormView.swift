@@ -51,7 +51,7 @@ struct SubscriptionDetailsFormView: View {
 						.pickerStyle(.menu)
 						
 					} else {
-						Text("Catégorie : \(subscriptionSelected?.categoryName?.categoryName ?? "")")
+						Text("Catégorie : \(subscriptionSelected?.categoryName ?? "")")
 					}
 					
 					VStack {

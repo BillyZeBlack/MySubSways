@@ -12,8 +12,8 @@ import SwiftData
 struct SubSwayApp: App {
     var body: some Scene {
         WindowGroup {
-            let subscriptionVM = SubscriptionViewModel()
             let categoryVM = CategoryViewModel()
+            let subscriptionVM = SubscriptionViewModel(categoryVM: categoryVM)
             NavigationView{
                 ContentView()
                     .navigationTitle("Titre")

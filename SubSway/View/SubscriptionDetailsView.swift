@@ -69,9 +69,12 @@ struct SubscriptionDetailsView: View {
 }
 
 /*#Preview {
+    let categoryVM = CategoryViewModel()
+    let subscriptionVM = SubscriptionViewModel(categoryVM: categoryVM)
+    
     SubscriptionDetailsView(
         subscriptionDetails: Subscription(),
-        subscriptionVM: SubscriptionViewModel(),
-        categoryVM: CategoryViewModel()
+        subscriptionVM: subscriptionVM,
+        categoryVM: categoryVM
     )
 }*/

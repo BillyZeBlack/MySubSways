@@ -119,7 +119,7 @@ struct MySubscriptionInformationsView: View {
 						}, set: { _ in }),
 					categoryPickerSelection:
 						Binding(get: {
-							String(mySubscription.categoryName!.categoryName)
+							String(mySubscription.categoryName!)
 						}, set: { _ in }),
 					subscriptionInformation:
 						Binding(get: {
@@ -141,7 +141,7 @@ struct MySubscriptionInformationsView: View {
 						HStack {
 							Text("Catégories")
 							Spacer()
-							Text(mySubscription.categoryName!.categoryName)
+							Text(mySubscription.categoryName!)
 						}
 						
 						Spacer()

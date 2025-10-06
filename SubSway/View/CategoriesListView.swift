@@ -33,22 +33,22 @@ struct CategoriesListView: View {
                     }
                 }
             }*/
-			ForEach( categoryVM.categories, id: \.id) { cat in
+			ForEach(categoryVM.categories, id: \.id) { cat in
+				let filteredSubscriptions = subscriptionVM.subscriptionsList.filter { $0.categoryName == cat.categoryName }
+				
 				Section(header: Text(cat.categoryName).font(.headline)) {
-					ForEach(subscriptionVM.subscriptionsList, id: \.id) { sub in
-						if(sub.categoryName == cat) {
-							NavigationLink(destination: SubscriptionDetailsView(subscriptionDetails: sub)
-								.environmentObject(subscriptionVM)
-								.environmentObject(categoryVM)
-							){
-								HStack{
-									Image(sub.subsrciptionImageName)
-										.resizable()
-										.frame(width: 60, height: 60)
-										.cornerRadius(10)
-									Spacer()
-									Text(sub.subsrciptionImageName)
-								}
+					ForEach(filteredSubscriptions, id: \.id) { sub in
+						NavigationLink(destination: SubscriptionDetailsView(subscriptionDetails: sub)
+							.environmentObject(subscriptionVM)
+							.environmentObject(categoryVM)
+						){
+							HStack{
+								Image(sub.subsrciptionImageName)
+									.resizable()
+									.frame(width: 60, height: 60)
+									.cornerRadius(10)
+								Spacer()
+								Text(sub.subscriptionName)
 							}
 						}
 					}
