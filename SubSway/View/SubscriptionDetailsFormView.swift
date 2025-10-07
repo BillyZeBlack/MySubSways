@@ -350,7 +350,32 @@ struct SubscriptionDetailsFormView: View {
             }
             .padding(.vertical)
         }
-        .background(Color.white)
+        .background(Color(.systemBackground))
+        .onTapGesture {
+            // Fermer le clavier quand on tape sur l'arrière-plan
+            hideKeyboard()
+        }
+        .onAppear {
+            // Pré-remplir les champs si on modifie un abonnement existant
+            if let selectedSubscription = subscriptionSelected {
+                subscriptionName = selectedSubscription.subscriptionName
+                subscriptionPrice = String(format: "%.2f", selectedSubscription.subscriptionPrice)
+                subscriptionStartDate = selectedSubscription.subscriptionStartDate
+                subscriptionIsCommited = selectedSubscription.isSubscriptionCommitted
+                subscriptionDuration = String(selectedSubscription.subscriptionDuration)
+                subscriptionIsTrialPeriod = selectedSubscription.isSubscriptionTrialPeriod
+                subscriptionTrialPeriodDuration = String(selectedSubscription.subscriptionTrialPeriodDuration)
+                selectionPaymentFrequency = selectedSubscription.selectionPaymentFrequency
+                subscriptionCancellationNotice = String(selectedSubscription.subscriptionCancellationNotice)
+                subscriptionInformation = selectedSubscription.subscriptionInformations
+                
+                // Définir la catégorie sélectionnée
+                if let categoryName = selectedSubscription.categoryName,
+                   let category = categoryVM.getCategoryByName(categoryName) {
+                    categoryPickerSelection = "\(category.id)"
+                }
+            }
+        }
         .alert("Information", isPresented: $showAlert) {
             Button("OK", role: .cancel) { }
         } message: {
@@ -361,7 +386,8 @@ struct SubscriptionDetailsFormView: View {
     private var isFormValid: Bool {
         !subscriptionName.isEmpty &&
         !subscriptionPrice.isEmpty &&
-        !categoryPickerSelection.isEmpty
+        !categoryPickerSelection.isEmpty &&
+        !selectionPaymentFrequency.isEmpty
     }
     
     private func createSubscription() {
@@ -424,13 +450,13 @@ struct FormSection<Content: View>: View {
             VStack(spacing: 1) {
                 content
             }
-            .background(Color.white)
+            .background(Color(.systemBackground))
             .cornerRadius(12)
             .overlay(
                 RoundedRectangle(cornerRadius: 12)
-                    .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                    .stroke(Color(.separator), lineWidth: 1)
             )
-            .shadow(color: .black.opacity(0.03), radius: 1, x: 0, y: 1)
+            .shadow(color: .primary.opacity(0.05), radius: 1, x: 0, y: 1)
             .padding(.horizontal)
         }
     }
@@ -466,7 +492,7 @@ struct FormField<Content: View>: View {
             content
         }
         .padding()
-        .background(Color.white)
+        .background(Color(.systemBackground))
     }
 }
 
@@ -496,7 +522,7 @@ struct ToggleRow: View {
             }
         }
         .padding()
-        .background(Color.white)
+        .background(Color(.systemBackground))
     }
 }
 
@@ -519,4 +545,11 @@ struct ToggleRow: View {
     )
     .environmentObject(CategoryViewModel())
     .environmentObject(SubscriptionViewModel(categoryVM: CategoryViewModel()))
+}
+
+extension SubscriptionDetailsFormView {
+    func hideKeyboard() {
+        let resign = #selector(UIResponder.resignFirstResponder)
+        UIApplication.shared.sendAction(resign, to: nil, from: nil, for: nil)
+    }
 }

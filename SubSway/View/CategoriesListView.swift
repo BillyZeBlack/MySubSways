@@ -11,147 +11,225 @@ struct CategoriesListView: View {
     @EnvironmentObject var subscriptionVM: SubscriptionViewModel
     @EnvironmentObject var categoryVM: CategoryViewModel
     
-    var body: some View {
-        NavigationView {
-            ScrollView {
-                LazyVStack(spacing: 16) {
-                    ForEach(categoryVM.categories, id: \.id) { category in
-                        CategorySectionView(
-                            category: category,
-                            subscriptionVM: subscriptionVM,
-                            categoryVM: categoryVM
-                        )
-                    }
-                }
-                .padding(.horizontal)
-                .padding(.top)
-            }
-            .navigationTitle("Toutes les Catégories")
-            .navigationBarTitleDisplayMode(.large)
-            .background(Color(.systemGroupedBackground))
-        }
-    }
-}
-
-struct CategorySectionView: View {
-    let category: Category
-    @ObservedObject var subscriptionVM: SubscriptionViewModel
-    @ObservedObject var categoryVM: CategoryViewModel
-    
-    private var categorySubscriptions: [Subscription] {
-        subscriptionVM.subscriptionsList.filter { $0.categoryName == category.categoryName }
+    // Utilise la méthode de CategoryViewModel pour obtenir les catégories avec abonnements
+    private var categoriesWithSubscriptions: [Category] {
+        categoryVM.getCategoriesWithSubscriptions()
     }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            // Header de la catégorie
-            HStack {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(category.categoryName)
-                        .font(.title3)
+        Group {
+            if categoriesWithSubscriptions.isEmpty {
+                // État vide - aucune catégorie avec abonnements
+                VStack(spacing: 20) {
+                    Image(systemName: "tray")
+                        .font(.system(size: 60))
+                        .foregroundColor(.secondary)
+                        .padding(.bottom, 8)
+                    
+                    Text("Aucun abonnement")
+                        .font(.title2)
                         .fontWeight(.semibold)
                         .foregroundColor(.primary)
                     
-                    Text("\(categorySubscriptions.count) abonnement\(categorySubscriptions.count > 1 ? "s" : "")")
-                        .font(.caption)
+                    Text("Vous n'avez pas encore d'abonnements dans vos catégories")
+                        .font(.body)
                         .foregroundColor(.secondary)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 32)
                 }
-                
-                Spacer()
-                
-                Image(systemName: "chevron.right")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-            }
-            .padding(.horizontal, 16)
-            
-            // Grille des abonnements de la catégorie
-            if !categorySubscriptions.isEmpty {
-                ScrollView(.horizontal, showsIndicators: false) {
-                    LazyHStack(spacing: 12) {
-                        ForEach(categorySubscriptions, id: \.id) { subscription in
-                            NavigationLink(destination: SubscriptionDetailsView(subscriptionDetails: subscription)
-                                .environmentObject(subscriptionVM)
-                                .environmentObject(categoryVM)
-                            ) {
-                                SubscriptionCard(subscription: subscription)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color(.systemGroupedBackground))
+            } else {
+                // Liste des catégories avec abonnements - Design conforme Apple
+                List {
+                    ForEach(categoriesWithSubscriptions, id: \.id) { category in
+                        Section {
+                            ForEach(category.subcriptions, id: \.id) { subscription in
+                                NavigationLink(
+                                    destination: MySubscriptionInformationsView(mySubscription: subscription)
+                                        .environmentObject(subscriptionVM)
+                                        .environmentObject(categoryVM)
+                                ) {
+                                    SubscriptionRow(subscription: subscription)
+                                }
+                                .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
                             }
-                            .buttonStyle(PlainButtonStyle())
+                        } header: {
+                            HStack {
+                                Text(category.categoryName)
+                                    .font(.headline)
+                                    .fontWeight(.semibold)
+                                    .foregroundColor(.primary)
+                                    .textCase(nil) // Désactive la majuscule automatique
+                                
+                                Spacer()
+                                
+                                Text("\(category.subcriptions.count)")
+                                    .font(.caption)
+                                    .fontWeight(.medium)
+                                    .foregroundColor(.secondary)
+                                    .padding(.horizontal, 8)
+                                    .padding(.vertical, 4)
+                                    .background(Color(.systemGray6))
+                                    .cornerRadius(12)
+                            }
+                            .padding(.vertical, 4)
                         }
                     }
-                    .padding(.horizontal, 16)
                 }
-            } else {
-                // État vide
-                VStack(spacing: 12) {
-                    Image(systemName: "tray")
-                        .font(.largeTitle)
-                        .foregroundColor(.secondary)
-                    
-                    Text("Aucun abonnement")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                    
-                    Text("Cette catégorie ne contient pas encore d'abonnements")
-                        .font(.caption)
-                        .foregroundColor(.secondary.opacity(0.7))
-                        .multilineTextAlignment(.center)
-                }
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 32)
-                .background(Color(.systemBackground))
-                .cornerRadius(12)
-                .padding(.horizontal, 16)
+                .listStyle(.insetGrouped)
             }
         }
-        .padding(.vertical, 8)
-        .background(Color(.systemBackground))
-        .cornerRadius(16)
-        .shadow(color: .black.opacity(0.05), radius: 3, x: 0, y: 1)
+        .navigationTitle("Mes Abonnements")
+        .navigationBarTitleDisplayMode(.large)
     }
 }
 
-struct SubscriptionCard: View {
+// MARK: SubViews
+// Composant réutilisable pour afficher une ligne d'abonnement - Design vibrant et engageant
+struct SubscriptionRow: View {
     let subscription: Subscription
     
+    private var monthlyAmount: Double {
+        let price = Double(subscription.subscriptionPrice)
+        switch subscription.selectionPaymentFrequency.lowercased() {
+        case "trimestrielle", "trimestriel":
+            return price / 3.0
+        case "annuelle", "annuel":
+            return price / 12.0
+        default:
+            return price
+        }
+    }
+    
+    // Couleur basée sur la catégorie pour un design cohérent
+    private var categoryColor: Color {
+        switch subscription.categoryName?.lowercased() {
+        case "fournisseur d'énergie":
+            return .blue
+        case "fournisseur internet":
+            return .green
+        case "streamig vidéo", "streaming vidéo":
+            return .purple
+        case "streamig musical", "streaming musical":
+            return .orange
+        case "téléphonie mobile":
+            return .red
+        case "chaine tv":
+            return .pink
+        case "assurance":
+            return .brown
+        case "sport":
+            return .cyan
+        default:
+            return .indigo
+        }
+    }
+    
     var body: some View {
-        VStack(spacing: 12) {
-            // Image de l'abonnement
-            ZStack {
-                RoundedRectangle(cornerRadius: 12)
-                    .fill(Color(.systemGray6))
-                    .frame(width: 80, height: 80)
-                
-                Image(subscription.subsrciptionImageName)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 50, height: 50)
-                    .cornerRadius(8)
-            }
+        HStack(spacing: 16) {
+            // Image de l'abonnement avec fond coloré et effet de brillance
+//            ZStack {
+//                // Fond avec dégradé coloré
+//                LinearGradient(
+//                    gradient: Gradient(colors: [
+//                        categoryColor.opacity(0.8),
+//                        categoryColor.opacity(0.4)
+//                    ]),
+//                    startPoint: .topLeading,
+//                    endPoint: .bottomTrailing
+//                )
+//                .frame(width: 56, height: 56)
+//                .cornerRadius(14)
+//                .shadow(color: categoryColor.opacity(0.3), radius: 4, x: 0, y: 2)
+//                
+//                // Effet de brillance
+//                Circle()
+//                    .fill(Color.white.opacity(0.2))
+//                    .frame(width: 20, height: 20)
+//                    .offset(x: -15, y: -15)
+//                
+//                Image(subscription.subsrciptionImageName)
+//                    .resizable()
+//                    .aspectRatio(contentMode: .fit)
+//                    .frame(width: 28, height: 28)
+//                    .foregroundColor(.white)
+//            }
             
-            // Informations
-            VStack(spacing: 4) {
+            // Informations principales avec design moderne
+            VStack(alignment: .leading, spacing: 6) {
                 Text(subscription.subscriptionName)
-                    .font(.caption)
-                    .fontWeight(.medium)
+                    .font(.headline)
+                    .fontWeight(.semibold)
                     .foregroundColor(.primary)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(2)
+                    .lineLimit(1)
                 
-                if subscription.subscriptionPrice > 0 {
-                    Text(String(format: "%.2f€", subscription.subscriptionPrice))
+                HStack(spacing: 8) {
+                    // Badge de catégorie coloré
+//                    Text(subscription.categoryName ?? "Non classé")
+//                        .font(.caption)
+//                        .fontWeight(.medium)
+//                        .foregroundColor(.white)
+//                        .padding(.horizontal, 8)
+//                        .padding(.vertical, 4)
+//                        .background(categoryColor)
+//                        .cornerRadius(8)
+                    
+                    // Indicateur de fréquence
+                    Text(getFrequencyBadge())
                         .font(.caption2)
-                        .fontWeight(.semibold)
-                        .foregroundColor(.secondary)
+                        .fontWeight(.medium)
+                        .foregroundColor(categoryColor)
+                        .padding(.horizontal, 6)
+                        .padding(.vertical, 2)
+                        .background(categoryColor.opacity(0.1))
+                        .cornerRadius(6)
                 }
             }
-            .frame(width: 80)
+            
+            Spacer()
+            
+            // Prix avec design accrocheur
+            VStack(alignment: .trailing, spacing: 4) {
+                Text(String(format: "%.2f€", subscription.subscriptionPrice))
+                    .font(.title3)
+                    .fontWeight(.bold)
+                    .foregroundColor(categoryColor)
+                
+                Text("Dépense \(subscription.selectionPaymentFrequency)")
+                    .font(.caption)
+                    .fontWeight(.medium)
+                    .foregroundColor(.secondary)
+            }
+            .padding(.horizontal, 12)
+            .padding(.vertical, 8)
+            .background(
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(categoryColor.opacity(0.1))
+            )
         }
         .padding(.vertical, 12)
-        .frame(width: 100)
-        .background(Color(.systemBackground))
-        .cornerRadius(12)
-        .shadow(color: .black.opacity(0.05), radius: 2, x: 0, y: 1)
+        .padding(.horizontal, 4)
+        .background(
+            RoundedRectangle(cornerRadius: 16)
+                .fill(Color(.systemBackground))
+                .shadow(color: .black.opacity(0.05), radius: 3, x: 0, y: 1)
+        )
+        .contentShape(Rectangle())
+    }
+    
+    private func getFrequencyBadge() -> String {
+        let frequency = subscription.selectionPaymentFrequency.lowercased()
+        switch frequency {
+        case "mensuelle", "mensuel":
+            return "M"
+        case "trimestrielle", "trimestriel":
+            return "T"
+        case "annuelle", "annuel":
+            return "A"
+        default:
+            return "M"
+        }
     }
 }
 

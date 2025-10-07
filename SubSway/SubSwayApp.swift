@@ -14,11 +14,14 @@ struct SubSwayApp: App {
         WindowGroup {
             let categoryVM = CategoryViewModel()
             let subscriptionVM = SubscriptionViewModel(categoryVM: categoryVM)
+            let contentVM = ContentViewModel(subscriptionVM: subscriptionVM, categoryVM: categoryVM)
+            
             NavigationView{
                 ContentView()
-                    .navigationTitle("Titre")
+                    .environmentObject(contentVM)
                     .environmentObject(subscriptionVM)
                     .environmentObject(categoryVM)
+                    .navigationTitle("Tableau de Bord")
             }
         }
         //.modelContainer(sharedModelContainer)

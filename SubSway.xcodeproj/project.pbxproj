@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9FE571CF2E9405C5008C4574 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE571CE2E9405C5008C4574 /* ContentViewModel.swift */; };
 		BE405DE22BB4915F00C3539A /* SubSwayApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE405DE12BB4915F00C3539A /* SubSwayApp.swift */; };
 		BE405DE42BB4915F00C3539A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE405DE32BB4915F00C3539A /* ContentView.swift */; };
 		BE405DE62BB4915F00C3539A /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE405DE52BB4915F00C3539A /* Item.swift */; };
@@ -28,6 +29,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9FE571CE2E9405C5008C4574 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		BE405DDE2BB4915F00C3539A /* SubSway.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SubSway.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE405DE12BB4915F00C3539A /* SubSwayApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubSwayApp.swift; sourceTree = "<group>"; };
 		BE405DE32BB4915F00C3539A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 				BE405DF82BB49A1F00C3539A /* SubscriptionViewModel.swift */,
 				BE7F25B12BB578B400C297FD /* CategoryViewModel.swift */,
 				BE733B262C0A42F500013AB2 /* SubscriptionContainer.xcdatamodeld */,
+				9FE571CE2E9405C5008C4574 /* ContentViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -214,6 +217,7 @@
 				BE6110DA2BBD657900478557 /* SubscriptionDetailsFormView.swift in Sources */,
 				BE405DE42BB4915F00C3539A /* ContentView.swift in Sources */,
 				BE5FFF1D2BC40B400051CA29 /* SubscriptionDetailsView.swift in Sources */,
+				9FE571CF2E9405C5008C4574 /* ContentViewModel.swift in Sources */,
 				BE405DF72BB491AF00C3539A /* Category.swift in Sources */,
 				BE405DFC2BB4A12200C3539A /* SubscriptionValidator.swift in Sources */,
 				BE405DE62BB4915F00C3539A /* Item.swift in Sources */,

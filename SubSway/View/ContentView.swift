@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import Charts
 //import SwiftData
 
 struct ContentView: View {
+    @EnvironmentObject var contentVM: ContentViewModel
     @EnvironmentObject var subscriptionVM: SubscriptionViewModel
     @EnvironmentObject var categoryVM: CategoryViewModel
     
@@ -19,22 +21,21 @@ struct ContentView: View {
                     
                     // Header avec statistiques
                     VStack(alignment: .leading, spacing: 16) {
-                        Text("Mes Abonnements")
-                            .font(.largeTitle)
-                            .fontWeight(.bold)
-                            .foregroundColor(.primary)
+                        Text("Synthèse")
+                            .font(.headline)
+                            .foregroundColor(.secondary)
                         
                         HStack(spacing: 16) {
                             StatCard(
                                 title: "Total",
-                                value: "\(subscriptionVM.mySubscriptionsList.count)",
+                                value: "\(contentVM.subscriptionCount)",
                                 icon: "creditcard.fill",
                                 color: .blue
                             )
                             
                             StatCard(
                                 title: "Mensuel",
-                                value: String(format: "%.2f€", totalMonthlyCost()),
+                                value: String(format: "%.2f€", contentVM.totalMonthlyCost()),
                                 icon: "eurosign.circle.fill",
                                 color: .green
                             )
@@ -62,86 +63,71 @@ struct ContentView: View {
                                 )
                             }
                             
-                            NavigationLink(destination: MySubscriptionsListView()
+                            NavigationLink(destination: CategoriesListView()
                                 .environmentObject(subscriptionVM)
                                 .environmentObject(categoryVM)) {
                                 QuickActionButton(
                                     title: "Mes Abonnements",
                                     icon: "list.bullet.circle.fill",
                                     color: .orange,
-                                    isDisabled: subscriptionVM.mySubscriptionsList.isEmpty
+                                    isDisabled: !contentVM.hasSubscriptions
                                 )
                             }
-                            .disabled(subscriptionVM.mySubscriptionsList.isEmpty)
+                            .disabled(!contentVM.hasSubscriptions)
                         }
                     }
                     .padding(.horizontal)
                     
-                    // Catégories
+                    // Graphique des dépenses par catégorie
                     VStack(alignment: .leading, spacing: 16) {
                         HStack {
-                            Text("Catégories")
-                                .font(.title2)
-                                .fontWeight(.semibold)
+                            Text("Dépenses par Catégorie")
+                                .font(.headline)
+                                .foregroundColor(.secondary)
                             
                             Spacer()
-                            
-                            NavigationLink("Voir tout", destination: CategoriesListView()
-                                .environmentObject(subscriptionVM)
-                                .environmentObject(categoryVM))
-                                .font(.subheadline)
-                                .foregroundColor(.blue)
                         }
                         
-                        LazyVGrid(columns: [
-                            GridItem(.flexible()),
-                            GridItem(.flexible())
-                        ], spacing: 12) {
-                            ForEach(Array(categoryVM.categories.prefix(4)), id: \.id) { category in
-                                CategoryCard(category: category)
+                        if contentVM.hasSubscriptions {
+                            CategoryBarChart(categoryVM: categoryVM, subscriptionVM: subscriptionVM)
+                                .frame(height: 200)
+                        } else {
+                            VStack(spacing: 16) {
+                                Image(systemName: "chart.bar.fill")
+                                    .font(.largeTitle)
+                                    .foregroundColor(.secondary)
+                                
+                                Text("Aucune donnée")
+                                    .font(.headline)
+                                    .foregroundColor(.primary)
+                                
+                                Text("Ajoutez des abonnements pour voir les statistiques")
+                                    .font(.subheadline)
+                                    .foregroundColor(.secondary)
+                                    .multilineTextAlignment(.center)
                             }
+                            .frame(height: 200)
+                            .frame(maxWidth: .infinity)
+                            .background(Color(.systemBackground))
+                            .cornerRadius(12)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .stroke(Color(.separator), lineWidth: 1)
+                            )
                         }
                     }
                     .padding(.horizontal)
-                    
-                    // Abonnements récents (si disponibles)
-                    if !subscriptionVM.mySubscriptionsList.isEmpty {
-                        VStack(alignment: .leading, spacing: 16) {
-                            HStack {
-                                Text("Derniers Abonnements")
-                                    .font(.title2)
-                                    .fontWeight(.semibold)
-                                
-                                Spacer()
-                                
-                                NavigationLink("Voir tout", destination: MySubscriptionsListView()
-                                    .environmentObject(subscriptionVM)
-                                    .environmentObject(categoryVM))
-                                    .font(.subheadline)
-                                    .foregroundColor(.blue)
-                            }
-                            
-                            LazyVStack(spacing: 12) {
-                                ForEach(Array(subscriptionVM.mySubscriptionsList.prefix(3)), id: \.id) { subscription in
-                                    SubscriptionRow(subscription: subscription)
-                                }
-                            }
-                        }
-                        .padding(.horizontal)
-                    }
                 }
                 .padding(.vertical)
             }
+            //.navigationTitle("Tableau de Bord")
             .navigationBarTitleDisplayMode(.inline)
             .background(Color(.systemGroupedBackground))
         }
     }
-    
-    private func totalMonthlyCost() -> Float {
-        subscriptionVM.mySubscriptionsList.reduce(0) { $0 + $1.subscriptionPrice }
-    }
 }
 
+// MARK: SubViews
 // Composants réutilisables
 struct StatCard: View {
     let title: String
@@ -171,7 +157,11 @@ struct StatCard: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(Color(.systemBackground))
         .cornerRadius(12)
-        .shadow(color: .black.opacity(0.05), radius: 2, x: 0, y: 1)
+        .overlay(
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(Color(.separator), lineWidth: 1)
+        )
+        .shadow(color: .primary.opacity(0.05), radius: 1, x: 0, y: 1)
     }
 }
 
@@ -197,7 +187,11 @@ struct QuickActionButton: View {
         .padding(.vertical, 16)
         .background(Color(.systemBackground))
         .cornerRadius(12)
-        .shadow(color: .black.opacity(0.05), radius: 2, x: 0, y: 1)
+        .overlay(
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(Color(.separator), lineWidth: 1)
+        )
+        .shadow(color: .primary.opacity(0.05), radius: 1, x: 0, y: 1)
         .opacity(isDisabled ? 0.6 : 1.0)
     }
 }
@@ -224,41 +218,151 @@ struct CategoryCard: View {
         .padding()
         .background(Color(.systemBackground))
         .cornerRadius(12)
-        .shadow(color: .black.opacity(0.05), radius: 2, x: 0, y: 1)
+        .overlay(
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(Color(.separator), lineWidth: 1)
+        )
+        .shadow(color: .primary.opacity(0.05), radius: 1, x: 0, y: 1)
     }
 }
 
-struct SubscriptionRow: View {
-    let subscription: Subscription
+// Graphique en barres pour les dépenses par catégorie avec Charts
+struct CategoryBarChart: View {
+    @ObservedObject var categoryVM: CategoryViewModel
+    @ObservedObject var subscriptionVM: SubscriptionViewModel
     
-    var body: some View {
-        HStack(spacing: 12) {
-            Image(subscription.subsrciptionImageName)
-                .resizable()
-                .frame(width: 40, height: 40)
-                .cornerRadius(8)
+    private var categoryData: [CategoryChartData] {
+        var data: [CategoryChartData] = []
+        
+        for category in categoryVM.getCategoriesWithSubscriptions() {
+            var totalAmount: Double = 0
             
-            VStack(alignment: .leading, spacing: 4) {
-                Text(subscription.subscriptionName)
-                    .font(.headline)
-                    .foregroundColor(.primary)
-                
-                Text(String(format: "%.2f€/mois", subscription.subscriptionPrice))
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
+            for subscription in category.subcriptions {
+                // Convertir le prix selon la fréquence de paiement
+                let monthlyAmount = convertToMonthlyAmount(
+                    price: Double(subscription.subscriptionPrice),
+                    frequency: subscription.selectionPaymentFrequency
+                )
+                totalAmount += monthlyAmount
             }
             
-            Spacer()
-            
-            Image(systemName: "chevron.right")
-                .font(.caption)
-                .foregroundColor(.secondary)
+            if totalAmount > 0 {
+                data.append(CategoryChartData(
+                    id: UUID(),
+                    categoryName: category.categoryName,
+                    amount: totalAmount
+                ))
+            }
+        }
+        
+        // Trier par montant décroissant
+        return data.sorted { $0.amount > $1.amount }
+    }
+    
+    private func convertToMonthlyAmount(price: Double, frequency: String) -> Double {
+        switch frequency.lowercased() {
+        case "trimestrielle", "trimestriel":
+            return price / 3.0
+        case "annuelle", "annuel":
+            return price / 12.0
+        default: // mensuelle
+            return price
+        }
+    }
+    
+    var body: some View {
+        VStack(spacing: 12) {
+            if categoryData.isEmpty {
+                VStack(spacing: 8) {
+                    Image(systemName: "chart.bar.doc.horizontal")
+                        .font(.title2)
+                        .foregroundColor(.secondary)
+                    
+                    Text("Aucune donnée disponible")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+                .frame(height: 200)
+            } else {
+                // Graphique en barres avec Charts
+                Chart {
+                    ForEach(categoryData) { data in
+                        BarMark(
+                            x: .value("Catégorie", data.categoryName),
+                            y: .value("Montant", data.amount)
+                        )
+                        .foregroundStyle(by: .value("Catégorie", data.categoryName))
+                        .cornerRadius(6)
+                        .annotation(position: .top) {
+                            Text(String(format: "%.1f€", data.amount))
+                                .font(.caption2)
+                                .fontWeight(.medium)
+                                .foregroundColor(.primary)
+                        }
+                    }
+                }
+                .chartForegroundStyleScale([
+                    "Fournisseur d'énergie": .blue,
+                    "Fournisseur internet": .green,
+                    "Streamig vidéo": .purple,
+                    "Streamig musical": .orange,
+                    "Téléphonie mobile": .red,
+                    "Chaine TV": .pink,
+                    "Assurance": .brown,
+                    "Sport": .cyan
+                ])
+                .chartYAxis {
+                    AxisMarks(position: .leading) { value in
+                        AxisGridLine()
+                        AxisTick()
+                        AxisValueLabel {
+                            if let doubleValue = value.as(Double.self) {
+                                Text(String(format: "%.0f€", doubleValue))
+                                    .font(.caption2)
+                                    .foregroundColor(.secondary)
+                            }
+                        }
+                    }
+                }
+                .chartXAxis {
+                    AxisMarks(preset: .aligned, position: .bottom) { value in
+                        AxisValueLabel {
+                            if let stringValue = value.as(String.self) {
+                                Text(truncateCategoryName(stringValue))
+                                    .font(.caption2)
+                                    .fontWeight(.medium)
+                                    .foregroundColor(.primary)
+                                    .multilineTextAlignment(.center)
+                            }
+                        }
+                    }
+                }
+                .frame(height: 200)
+            }
         }
         .padding()
         .background(Color(.systemBackground))
         .cornerRadius(12)
-        .shadow(color: .black.opacity(0.05), radius: 2, x: 0, y: 1)
+        .overlay(
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(Color(.separator), lineWidth: 1)
+        )
+        .shadow(color: .primary.opacity(0.05), radius: 1, x: 0, y: 1)
     }
+    
+    private func truncateCategoryName(_ name: String) -> String {
+        if name.count > 12 {
+            return String(name.prefix(10)) + "..."
+        }
+        return name
+    }
+}
+
+// Structure de données pour le graphique
+struct CategoryChartData: Identifiable {
+    let id: UUID
+    let categoryName: String
+    let amount: Double
 }
 
 #Preview {

@@ -11,15 +11,18 @@ class Category: Identifiable, Hashable {
     var id = UUID()
     var categoryName: String
     var categoryImageName: String
+    var subcriptions : [Subscription]
     
     init(categoryName: String, categoryImageName: String, subcriptions: [Subscription]) {
         self.categoryName = categoryName
         self.categoryImageName = categoryImageName
+        self.subcriptions = []
     }
     
     init() {
         self.categoryName = ""
         self.categoryImageName = ""
+        self.subcriptions = []
     }
     
     func hash(into hasher: inout Hasher) {
