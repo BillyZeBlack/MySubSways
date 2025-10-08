@@ -288,7 +288,7 @@ struct CategoryBarChart: View {
                 Chart {
                     ForEach(categoryData) { data in
                         BarMark(
-                            x: .value("Catégorie", data.categoryName),
+                            x: .value("Catégorie", ""),
                             y: .value("Montant", data.amount)
                         )
                         .foregroundStyle(by: .value("Catégorie", data.categoryName))

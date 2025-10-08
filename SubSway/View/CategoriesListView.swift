@@ -128,34 +128,6 @@ struct SubscriptionRow: View {
     
     var body: some View {
         HStack(spacing: 16) {
-            // Image de l'abonnement avec fond coloré et effet de brillance
-//            ZStack {
-//                // Fond avec dégradé coloré
-//                LinearGradient(
-//                    gradient: Gradient(colors: [
-//                        categoryColor.opacity(0.8),
-//                        categoryColor.opacity(0.4)
-//                    ]),
-//                    startPoint: .topLeading,
-//                    endPoint: .bottomTrailing
-//                )
-//                .frame(width: 56, height: 56)
-//                .cornerRadius(14)
-//                .shadow(color: categoryColor.opacity(0.3), radius: 4, x: 0, y: 2)
-//                
-//                // Effet de brillance
-//                Circle()
-//                    .fill(Color.white.opacity(0.2))
-//                    .frame(width: 20, height: 20)
-//                    .offset(x: -15, y: -15)
-//                
-//                Image(subscription.subsrciptionImageName)
-//                    .resizable()
-//                    .aspectRatio(contentMode: .fit)
-//                    .frame(width: 28, height: 28)
-//                    .foregroundColor(.white)
-//            }
-            
             // Informations principales avec design moderne
             VStack(alignment: .leading, spacing: 6) {
                 Text(subscription.subscriptionName)
@@ -165,16 +137,6 @@ struct SubscriptionRow: View {
                     .lineLimit(1)
                 
                 HStack(spacing: 8) {
-                    // Badge de catégorie coloré
-//                    Text(subscription.categoryName ?? "Non classé")
-//                        .font(.caption)
-//                        .fontWeight(.medium)
-//                        .foregroundColor(.white)
-//                        .padding(.horizontal, 8)
-//                        .padding(.vertical, 4)
-//                        .background(categoryColor)
-//                        .cornerRadius(8)
-                    
                     // Indicateur de fréquence
                     Text(getFrequencyBadge())
                         .font(.caption2)

@@ -157,7 +157,6 @@ struct SubscriptionDetailsFormView: View {
                                     }
                                 
                                 Text("€")
-                                    .foregroundColor(.orange)
                             }
                         }
                     )
@@ -501,7 +500,7 @@ struct FormField<Content: View>: View {
             HStack {
                 Image(systemName: icon)
                     .font(.subheadline)
-                    .foregroundColor(.orange)
+                    .foregroundColor(.green)
                     .frame(width: 20)
                 
                 Text(title)
@@ -529,7 +528,7 @@ struct ToggleRow: View {
             HStack {
                 Image(systemName: icon)
                     .font(.subheadline)
-                    .foregroundColor(.orange)
+                    .foregroundColor(.green)
                     .frame(width: 20)
                 
                 Text(title)
@@ -541,7 +540,7 @@ struct ToggleRow: View {
                 
                 Toggle("", isOn: $isOn)
                     .labelsHidden()
-                    .tint(.orange)
+                    .tint(.green)
             }
         }
         .padding()
