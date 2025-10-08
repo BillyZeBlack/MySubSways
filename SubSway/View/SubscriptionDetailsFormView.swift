@@ -36,18 +36,9 @@ struct SubscriptionDetailsFormView: View {
         ScrollView {
             LazyVStack(spacing: 20) {
                 
-                // Header chaleureux
                 VStack(spacing: 16) {
                     HStack(spacing: 16) {
-                        ZStack {
-                            Circle()
-                                .fill(Color.orange.opacity(0.1))
-                                .frame(width: 60, height: 60)
-                            
-                            Image(systemName: "plus.circle.fill")
-                                .font(.title2)
-                                .foregroundColor(.orange)
-                        }
+                        Spacer ()
                         
                         VStack(alignment: .leading, spacing: 4) {
                             Text("Nouvel Abonnement")
@@ -66,7 +57,7 @@ struct SubscriptionDetailsFormView: View {
                     
                     // Barre de progression subtile
                     Rectangle()
-                        .fill(Color.orange.opacity(0.3))
+                        .fill(Color.green)
                         .frame(height: 3)
                         .cornerRadius(1.5)
                         .padding(.horizontal)
@@ -77,19 +68,27 @@ struct SubscriptionDetailsFormView: View {
                 FormSection(title: "Informations principales") {
                     // Catégorie
                     if subscriptionSelected == nil {
-                        FormField(
-                            title: "Catégorie",
-                            icon: "folder.fill",
-                            content: {
-                                Picker("Catégorie", selection: $categoryPickerSelection) {
-                                    ForEach(subscriptionCategoryName, id: \.id) { category in
-                                        Text(category.categoryName)
-                                            .tag("\(category.id)")
+                        HStack {
+                            FormField(
+                                title: "Catégorie",
+                                icon: "folder.fill",
+                                content: {
+                                    Picker("Catégorie", selection: $categoryPickerSelection) {
+                                        ForEach(subscriptionCategoryName, id: \.id) { category in
+                                            Text(category.categoryName)
+                                                .tag("\(category.id)")
+                                        }
                                     }
+                                    .pickerStyle(.navigationLink)
                                 }
-                                .pickerStyle(.navigationLink)
+                            )
+                            .overlay(alignment: .topTrailing) {
+                                Image(systemName: "star.circle")
+                                    .padding(.top, 12)
+                                    .padding(.trailing, 10)
+                                    .foregroundStyle(.orange)
                             }
-                        )
+                        }
                     } else {
                         FormField(
                             title: "Catégorie",
@@ -99,6 +98,12 @@ struct SubscriptionDetailsFormView: View {
                                     .foregroundColor(.secondary)
                             }
                         )
+                        .overlay(alignment: .topTrailing) {
+                            Image(systemName: "star.circle")
+                                .padding(.top, 12)      // ajuste selon ton layout interne
+                                .padding(.trailing, 10)
+                                .foregroundStyle(.orange)
+                        }
                     }
                     
                     // Nom de l'abonnement
@@ -108,8 +113,15 @@ struct SubscriptionDetailsFormView: View {
                         content: {
                             TextField("ex: Netflix Premium", text: $subscriptionName)
                                 .textFieldStyle(PlainTextFieldStyle())
+                                .font(.headline)
                         }
                     )
+                    .overlay(alignment: .topTrailing) {
+                        Image(systemName: "star.circle")
+                            .padding(.top, 12)      // ajuste selon ton layout interne
+                            .padding(.trailing, 10)
+                            .foregroundStyle(.orange)
+                    }
                     
                     // Prix
                     FormField(
@@ -118,6 +130,7 @@ struct SubscriptionDetailsFormView: View {
                         content: {
                             HStack {
                                 TextField("0,00", text: $subscriptionPrice)
+                                    .font(.headline)
                                     .keyboardType(.decimalPad)
                                     .onReceive(Just(subscriptionPrice)) { newPrice in
                                         var filtered = newPrice.filter { ",.0123456789".contains($0) }
@@ -144,10 +157,16 @@ struct SubscriptionDetailsFormView: View {
                                     }
                                 
                                 Text("€")
-                                    .foregroundColor(.secondary)
+                                    .foregroundColor(.orange)
                             }
                         }
                     )
+                    .overlay(alignment: .topTrailing) {
+                        Image(systemName: "star.circle")
+                            .padding(.top, 12)      // ajuste selon ton layout interne
+                            .padding(.trailing, 10)
+                            .foregroundStyle(.orange)
+                    }
                     
                     // Date de début
                     FormField(
@@ -180,6 +199,7 @@ struct SubscriptionDetailsFormView: View {
                             content: {
                                 HStack {
                                     TextField("12", text: $subscriptionDuration)
+                                        .font(.headline)
                                         .keyboardType(.numberPad)
                                         .onReceive(Just(subscriptionDuration)) { newDuration in
                                             let filtered = newDuration.filter { "0123456789".contains($0) }
@@ -212,6 +232,7 @@ struct SubscriptionDetailsFormView: View {
                             content: {
                                 HStack {
                                     TextField("1", text: $subscriptionTrialPeriodDuration)
+                                        .font(.headline)
                                         .keyboardType(.numberPad)
                                         .onReceive(Just(subscriptionTrialPeriodDuration)) { newDuration in
                                             let filtered = newDuration.filter { "0123456789".contains($0) }
@@ -234,6 +255,8 @@ struct SubscriptionDetailsFormView: View {
                         Text("Fréquence de paiement")
                             .font(.subheadline)
                             .foregroundColor(.secondary)
+                            .padding(.leading, 10)
+                            .padding(.top, 5)
                         
                         Picker("Fréquence", selection: $selectionPaymentFrequency) {
                             ForEach(["Mensuelle", "Trimestrielle", "Annuelle"], id: \.self) { frequency in
@@ -251,6 +274,8 @@ struct SubscriptionDetailsFormView: View {
                         Text("Préavis de résiliation")
                             .font(.subheadline)
                             .foregroundColor(.secondary)
+                            .padding(.leading, 10)
+                            .padding(.top, 5)
                         
                         Picker("Préavis", selection: $subscriptionCancellationNotice) {
                             ForEach(["0", "1", "2", "3"], id: \.self) { notice in
@@ -268,6 +293,8 @@ struct SubscriptionDetailsFormView: View {
                         Text("Informations supplémentaires")
                             .font(.subheadline)
                             .foregroundColor(.secondary)
+                            .padding(.leading, 10)
+                            .padding(.top, 5)
                         
                         TextEditor(text: $subscriptionInformation)
                             .frame(height: 100)
@@ -282,7 +309,20 @@ struct SubscriptionDetailsFormView: View {
                 }
                 
                 // Bouton de validation avec dégradé
-                VStack(spacing: 16) {
+                if !isFormValid {
+                    HStack(spacing: 8) {
+                        Image(systemName: "exclamationmark.triangle.fill")
+                            .foregroundColor(.orange)
+                        
+                        Text("Veuillez remplir tous les champs obligatoires")
+                            .font(.caption)
+                            .foregroundColor(.orange)
+                            .multilineTextAlignment(.center)
+                    }
+                    .padding(12)
+                    .background(Color.orange.opacity(0.1))
+                    .cornerRadius(8)
+                } else {
                     Button(action: createSubscription) {
                         HStack {
                             if isCreating {
@@ -317,23 +357,7 @@ struct SubscriptionDetailsFormView: View {
                     .disabled(isCreating || !isFormValid)
                     .scaleEffect((isCreating || !isFormValid) ? 0.95 : 1.0)
                     .animation(.spring(response: 0.3, dampingFraction: 0.6), value: isCreating || !isFormValid)
-                    
-                    if !isFormValid {
-                        HStack(spacing: 8) {
-                            Image(systemName: "exclamationmark.triangle.fill")
-                                .foregroundColor(.orange)
-                            
-                            Text("Veuillez remplir tous les champs obligatoires")
-                                .font(.caption)
-                                .foregroundColor(.orange)
-                                .multilineTextAlignment(.center)
-                        }
-                        .padding(12)
-                        .background(Color.orange.opacity(0.1))
-                        .cornerRadius(8)
-                    }
                 }
-                .padding(.horizontal)
                 
                 // Footer avec icône
                 VStack(spacing: 12) {
@@ -352,7 +376,6 @@ struct SubscriptionDetailsFormView: View {
         }
         .background(Color(.systemBackground))
         .onTapGesture {
-            // Fermer le clavier quand on tape sur l'arrière-plan
             hideKeyboard()
         }
         .onAppear {
