@@ -288,7 +288,7 @@ struct CategoryBarChart: View {
                 Chart {
                     ForEach(categoryData) { data in
                         BarMark(
-                            x: .value("Catégorie", ""),
+                            x: .value("Catégorie", data.categoryName),
                             y: .value("Montant", data.amount)
                         )
                         .foregroundStyle(by: .value("Catégorie", data.categoryName))
@@ -324,19 +324,7 @@ struct CategoryBarChart: View {
                         }
                     }
                 }
-                .chartXAxis {
-                    AxisMarks(preset: .aligned, position: .bottom) { value in
-                        AxisValueLabel {
-                            if let stringValue = value.as(String.self) {
-                                Text(truncateCategoryName(stringValue))
-                                    .font(.caption2)
-                                    .fontWeight(.medium)
-                                    .foregroundColor(.primary)
-                                    .multilineTextAlignment(.center)
-                            }
-                        }
-                    }
-                }
+                .chartXAxis(.hidden)
                 .frame(height: 200)
             }
         }
