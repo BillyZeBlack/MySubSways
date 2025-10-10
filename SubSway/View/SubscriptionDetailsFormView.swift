@@ -360,9 +360,7 @@ struct SubscriptionDetailsFormView: View {
                 
                 // Footer avec icône
                 VStack(spacing: 12) {
-                    Image(systemName: "sparkles")
-                        .font(.title3)
-                        .foregroundColor(.purple.opacity(0.7))
+                    /**soit la pub soit  le texte **/
                     
                     Text("Votre abonnement sera ajouté à votre liste personnelle")
                         .font(.caption)

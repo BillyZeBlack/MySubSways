@@ -16,6 +16,8 @@ struct MySubscriptionInformationsView: View {
     @State var mySubscription: Subscription = Subscription()
     @State var isEditing: Bool = false
     @State private var showDeleteConfirmation = false
+    @Environment(\.dismiss) var dismiss
+    @State private var shouldNavigateToContentView = false
     
     var body: some View {
         NavigationView {
@@ -226,7 +228,30 @@ struct MySubscriptionInformationsView: View {
             .alert("Supprimer l'abonnement", isPresented: $showDeleteConfirmation) {
                 Button("Annuler", role: .cancel) { }
                 Button("Supprimer", role: .destructive) {
+                    // Supprimer l'abonnement
                     subscriptionVM.removeSubscription(mySubscription)
+                    
+                    // Gérer la navigation après suppression
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        // Vérifier si la liste est vide
+                        if subscriptionVM.mySubscriptionsList.isEmpty {
+                            // Si la liste est vide, retourner à ContentView
+                            // On utilise une approche qui ferme toute la pile de navigation
+                            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                               let window = windowScene.windows.first,
+                               let rootViewController = window.rootViewController {
+                                // Fermer toutes les vues modales
+                                rootViewController.dismiss(animated: true, completion: nil)
+                                // Si c'est une navigation, retourner à la racine
+                                if let navigationController = rootViewController as? UINavigationController {
+                                    navigationController.popToRootViewController(animated: true)
+                                }
+                            }
+                        } else {
+                            // Sinon, fermer simplement cette vue (retour à CategoriesListView)
+                            dismiss()
+                        }
+                    }
                 }
             } message: {
                 Text("Êtes-vous sûr de vouloir supprimer cet abonnement ? Cette action est irréversible.")

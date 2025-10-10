@@ -19,30 +19,6 @@ struct ContentView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
                     
-                    // Header avec statistiques
-                    VStack(alignment: .leading, spacing: 16) {
-                        Text("Synthèse")
-                            .font(.headline)
-                            .foregroundColor(.secondary)
-                        
-                        HStack(spacing: 16) {
-                            StatCard(
-                                title: "Total",
-                                value: "\(contentVM.subscriptionCount)",
-                                icon: "creditcard.fill",
-                                color: .blue
-                            )
-                            
-                            StatCard(
-                                title: "Mensuel",
-                                value: String(format: "%.2f€", contentVM.totalMonthlyCost()),
-                                icon: "eurosign.circle.fill",
-                                color: .green
-                            )
-                        }
-                    }
-                    .padding(.horizontal)
-                    
                     // Actions rapides
                     VStack(alignment: .leading, spacing: 12) {
                         Text("Actions Rapides")
@@ -78,15 +54,36 @@ struct ContentView: View {
                     }
                     .padding(.horizontal)
                     
+                    // Header avec statistiques
+                    VStack(alignment: .leading, spacing: 16) {
+                        Text("Synthèse")
+                            .font(.headline)
+                            .foregroundColor(.secondary)
+                        
+                        HStack(spacing: 16) {
+                            StatCard(
+                                title: "Total",
+                                value: "\(contentVM.subscriptionCount)",
+                                icon: "creditcard.fill",
+                                color: .blue
+                            )
+                            
+                            StatCard(
+                                title: "Mensuel",
+                                value: String(format: "%.2f€", contentVM.totalMonthlyCost()),
+                                icon: "eurosign.circle.fill",
+                                color: .green
+                            )
+                        }
+                    }
+                    .padding(.horizontal)
+                    
                     // Graphique des dépenses par catégorie
                     VStack(alignment: .leading, spacing: 16) {
-                        HStack {
-                            Text("Dépenses par Catégorie")
-                                .font(.headline)
-                                .foregroundColor(.secondary)
-                            
-                            Spacer()
-                        }
+                        Text("Dépenses par Catégorie")
+                            .font(.headline)
+                            .foregroundColor(.secondary)
+                            .padding(.bottom, categoryVM.getCategoriesWithSubscriptions().isEmpty ? 0 : 15)
                         
                         if contentVM.hasSubscriptions {
                             CategoryBarChart(categoryVM: categoryVM, subscriptionVM: subscriptionVM)

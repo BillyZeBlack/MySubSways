@@ -244,5 +244,9 @@ class SubscriptionViewModel: ObservableObject {
     
     func removeSubscription (_ subscription: Subscription) {
         mySubscriptionsList.removeAll { $0.id == subscription.id }
+        // Notifier CategoryViewModel de la suppression
+        categoryVM.removeSubscriptionFromCategory(subscription)
+        // Forcer la mise à jour des observateurs
+        objectWillChange.send()
     }
 }
